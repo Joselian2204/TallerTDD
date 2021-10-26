@@ -1,36 +1,35 @@
 public class Ascensor {
-    private int pisoActual = 0;
-    private int pisoDestino = -1;
-    private int pisoPersona = -1;
+    // El ascensor al comenzar el día espera con su puerta cerrada en el primer piso del edificio
+    // El ascensor siempre sabe en que piso esta y cual es su piso de destino.
+    private int pisoActual = 1;
+    private int pisoDestino;
+    private int pisoPersona;
     private boolean primerviaje = false;
 
-    public int ocupado(int pp, int pa){
-        if(pp == pa){
+    final int ULTIMO_PISO = 3;
+    final int PRIMER_PISO = 1;
+    public int ocupado(int pisoPersona, int pisoActual){
+        if(pisoPersona == pisoActual){
             return 1;
         }else{
             return 0;
         }
     }
-
-    public boolean crearPersona(){
-        pisoPersona = (int) (Math.random()*2);
-        if(pisoPersona >= 0 && pisoPersona < 3){
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+    // El programa debe tener una función para “Crear persona”, cuando se invoque a esta función, el programa deberá crear una persona y colocarla en un piso.
+    public void crearPersona(){
+        //  El piso en el que aparecerá la persona se determinara aleatoriamente.
+        pisoPersona = (int) (1 + Math.random()*(ULTIMO_PISO-1));
     }
 
     public void llamarPiso(int pisoLlamada) throws Exception {
+        // El piso de destino de la persona nunca es igual al piso en el que se crea esa persona.
         if(pisoLlamada != pisoActual){
             establecerDestino(pisoLlamada);
         }
     }
 
     public void establecerDestino(int destino) throws Exception {
-        if(destino >= 0 && destino < 3){
+        if(destino >= PRIMER_PISO && destino <= ULTIMO_PISO){
             pisoDestino=destino;
         }else{
             throw new Exception("Destino incorrecto:"+destino);

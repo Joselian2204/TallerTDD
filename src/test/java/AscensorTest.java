@@ -28,12 +28,15 @@ public class AscensorTest {
 
     @Test
     public void existePersona(){
-        assertEquals(true,ascensor.crearPersona());
+        ascensor.crearPersona();
+        int pisoPersona = ascensor.getPisoPersona();
+        //verificamos si la persona fue creada en un piso correcto
+        assertTrue(pisoPersona >= 1 && pisoPersona <= 3);
     }
 
     @Test
     public void noExistePersona(){
-        assertEquals(-1, ascensor.getPisoPersona());
+        assertEquals(0, ascensor.getPisoPersona());
     }
 
     @Test
@@ -48,19 +51,29 @@ public class AscensorTest {
         ascensor.establecerDestino(4);
     }
 
+    //Si la primera persona del día aparece en el piso 1, puede subirse de inmediato al ascensor (después de presionar el botón de llamada).
     @Test
-    public void verificarLlamadaPrimeraPersona() throws Exception {
-        //creamos a la primera persona y luego la seteamos en el piso 1
-        ascensor.setPisoPersona(0);
-        ascensor.llamarPiso(0);
-        assertEquals(-1, ascensor.getPisoDestino());
+    public void verificarBotonLlamadaPrimeraPersona() throws Exception {
+        //creamos a la primera persona en el piso 1
+        ascensor.setPisoPersona(1);
+        ascensor.llamarPiso(1);
+        assertEquals(0, ascensor.getPisoDestino());
     }
 
+    // Si la primera persona aparece en el piso 2, el elevador deberá dirigirse al piso 2 y recoger a la persona.
     @Test
-    public void verificarLlamada() throws Exception {
-        //creamos a la primera persona
+    public void verificarBotonLlamadaPiso2() throws Exception {
+        //creamos una persona en el piso 2
         ascensor.crearPersona();
-        ascensor.setPisoPersona(1);
+        ascensor.setPisoPersona(2);
+        int pisoPersona = ascensor.getPisoPersona();
+        ascensor.llamarPiso(pisoPersona);
+        assertEquals(pisoPersona, ascensor.getPisoDestino());
+    }
+    @Test
+    public void verificarBotonLlamada() throws Exception {
+        ascensor.crearPersona();
+        ascensor.setPisoPersona(3);
         int pisoPersona = ascensor.getPisoPersona();
         ascensor.llamarPiso(pisoPersona);
         assertEquals(pisoPersona, ascensor.getPisoDestino());
