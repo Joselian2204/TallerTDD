@@ -37,15 +37,32 @@ public class AscensorTest {
     }
 
     @Test
-    public void pisoDestinoDiferentePisoPersona(){
-        ascensor.setPisoActual(2);
-        assertEquals(1,ascensor.llamarPiso(1));
+    public void verificarNuevoDestino() throws Exception {
+        ascensor.establecerDestino(2);
+        assertEquals(2, ascensor.getPisoDestino());
     }
 
     @Test
-    public void primerViajePersona(){
-        assertEquals(true,ascensor.primerViaje());
+    public void verificarNuevoDestinoIncorrecto() throws Exception {
+        exception.expect(Exception.class);
+        ascensor.establecerDestino(4);
     }
 
+    @Test
+    public void verificarLlamadaPrimeraPersona() throws Exception {
+        //creamos a la primera persona y luego la seteamos en el piso 1
+        ascensor.setPisoPersona(0);
+        ascensor.llamarPiso(0);
+        assertEquals(-1, ascensor.getPisoDestino());
+    }
 
+    @Test
+    public void verificarLlamada() throws Exception {
+        //creamos a la primera persona
+        ascensor.crearPersona();
+        ascensor.setPisoPersona(1);
+        int pisoPersona = ascensor.getPisoPersona();
+        ascensor.llamarPiso(pisoPersona);
+        assertEquals(pisoPersona, ascensor.getPisoDestino());
+    }
 }

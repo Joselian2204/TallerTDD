@@ -1,6 +1,6 @@
 public class Ascensor {
     private int pisoActual = 0;
-    private int pisoDestino;
+    private int pisoDestino = -1;
     private int pisoPersona = -1;
     private boolean primerviaje = false;
 
@@ -23,18 +23,18 @@ public class Ascensor {
         }
     }
 
-    public int llamarPiso(int pl){
-        if(pl != pisoActual){
-            pisoDestino = pl;
-            return 1;
-        }
-        else{
-            return 0;
+    public void llamarPiso(int pisoLlamada) throws Exception {
+        if(pisoLlamada != pisoActual){
+            establecerDestino(pisoLlamada);
         }
     }
 
-    public boolean primerViaje(){
-        if ()
+    public void establecerDestino(int destino) throws Exception {
+        if(destino >= 0 && destino < 3){
+            pisoDestino=destino;
+        }else{
+            throw new Exception("Destino incorrecto:"+destino);
+        }
     }
 
     public int getPisoActual() {
